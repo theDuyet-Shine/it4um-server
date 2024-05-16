@@ -66,6 +66,10 @@ app.post("/email/send", async (req, res) => {
   }
 });
 
+app.get("/", async(req, res) => {
+  res.status(200).json("Hello world")
+})
+
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running at http://${APP_HOST}:${APP_PORT}`);
