@@ -1,4 +1,4 @@
-import { signupService } from "../services/authService.js";
+import { loginService, signupService } from "../services/authService.js";
 import { sendMail } from "../services/otpService.js";
 import {
   getOtp,
@@ -54,6 +54,19 @@ export const validateOtp = async (req, res) => {
     validateOtpInStore(email);
     deleteOtp(email);
     res.status(200).json({ message: "OTP validated successfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const login = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ error: "Missing username or password!" });
+    }
+    const { token, user } = await loginService(username, password);
+    res.status(200).json({ token, user });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

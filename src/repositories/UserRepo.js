@@ -12,7 +12,17 @@ const createUser = async (userData) => {
 
 const findUserById = async (id) => {
   try {
-    return await userModel.findById(id);
+    const user = await userModel.findById(id);
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const findUserByUsername = async (username) => {
+  try {
+    const user = await userModel.findOne({ username });
+    return user;
   } catch (error) {
     throw error;
   }
@@ -34,4 +44,10 @@ const deleteUserById = async (id) => {
   }
 };
 
-export { createUser, findUserById, updateUserById, deleteUserById };
+export {
+  createUser,
+  findUserById,
+  updateUserById,
+  deleteUserById,
+  findUserByUsername,
+};

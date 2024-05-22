@@ -1,10 +1,10 @@
 import express from "express";
-import nodemailer from "nodemailer";
-import { OAuth2Client } from "google-auth-library";
 import dotenv from "dotenv";
 import cors from "cors";
 import { handleConnectDB } from "./mongoConfig.js";
 import authRouter from "./routes/authRoute.js";
+import { authMiddleware } from "./middlewares/authMiddleware.js";
+import userRouter from "./routes/userRoute.js";
 
 dotenv.config();
 
@@ -21,6 +21,7 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/auth", authRouter);
+app.use("/user", authMiddleware, userRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}!`);
