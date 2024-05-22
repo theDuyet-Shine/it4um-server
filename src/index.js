@@ -2,20 +2,24 @@ import express from "express";
 import nodemailer from "nodemailer";
 import { OAuth2Client } from "google-auth-library";
 import dotenv from "dotenv";
+import cors from "cors";
+import { handleConnectDB } from "./mongoConfig.js";
+import authRouter from "./routes/authRoute.js";
 
 dotenv.config();
 
 const app = express();
-
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const APP_PORT = process.env.APP_PORT
-const APP_HOST = process.env.APP_HOST
+handleConnectDB();
+const port = process.env.PORT || 3000;
+
 const GOOGLE_MAIL_CLIENT_ID = process.env.GOOGLE_MAIL_CLIENT_ID;
 const GOOGLE_MAIL_CLIENT_SECRET = process.env.GOOGLE_MAIL_CLIENT_SECRET;
 const GOOGLE_MAILER_REFRESH_TOKEN = process.env.GOOGLE_MAILER_REFRESH_TOKEN;
 const ADMIN_EMAIL_ADDRESS = process.env.ADMIN_EMAIL_ADDRESS;
-
 
 const myOAuth2Client = new OAuth2Client(
   GOOGLE_MAIL_CLIENT_ID,
@@ -66,11 +70,12 @@ app.post("/email/send", async (req, res) => {
   }
 });
 
-app.get("/", async(req, res) => {
-  res.status(200).json("Hello world")
-})
+app.get("/", async (req, res) => {
+  res.status(200).json("Hello world");
+});
 
+app.use("/auth", authRouter);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is running at http://${APP_HOST}:${APP_PORT}`);
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}!`);
 });
