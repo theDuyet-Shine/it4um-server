@@ -9,7 +9,7 @@ import {
 const authRouter = express.Router();
 
 authRouter.post("/signup", signup);
-authRouter.post("/sendOtp", sendOtp);
+authRouter.post("/send-otp", sendOtp);
 authRouter.post("/validate-otp", validateOtp);
 authRouter.post("/login", login);
 
