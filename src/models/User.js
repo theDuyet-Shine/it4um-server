@@ -9,10 +9,10 @@ const userSchema = new mongoose.Schema({
     default:
       "https://th.bing.com/th/id/OIP.ZXSgz-LNexQRb5OgjOrr6wHaFv?rs=1&pid=ImgDetMain",
   },
-  address: { type: String },
-  phone_number: { type: String },
+  address: { type: String, default: null },
+  phone_number: { type: String, default: null },
   email: { type: String, required: true, unique: true },
-  expertise: { type: String },
+  expertise: { type: String, default: null },
   total_post: { type: Number, default: 0 },
 });
 
