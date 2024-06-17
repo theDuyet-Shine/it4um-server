@@ -6,6 +6,7 @@ import authRouter from "./routes/authRoute.js";
 import { userAuthMiddleware } from "./middlewares/authMiddleware.js";
 import userRouter from "./routes/userRoute.js";
 import postRouter from "./routes/postRoute.js";
+import tagRouter from "./routes/tagRoute.js";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.get("/", async (req, res) => {
 app.use("/auth", authRouter);
 app.use("/user", userAuthMiddleware, userRouter);
 app.use("/post", postRouter);
+app.use("/tag", tagRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}!`);

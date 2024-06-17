@@ -8,7 +8,6 @@ import {
 } from "../controllers/postController.js";
 import {
   userAuthMiddleware,
-  adminAuthMiddleware,
   combinedMiddleware,
 } from "../middlewares/authMiddleware.js";
 
