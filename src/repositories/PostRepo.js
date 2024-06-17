@@ -24,7 +24,11 @@ export const filterPost = async ({ sort, tag, search, page }) => {
   const skip = (page - 1) * POSTS_PER_PAGE;
 
   let query = {};
-  if (tag) query.tag = tag;
+  if (tag) {
+    // Nếu tag là chuỗi, phân tách nó thành mảng
+    const tagsArray = tag.split(",");
+    query.tags = { $all: tagsArray };
+  }
   if (search) query.title = { $regex: search, $options: "i" };
 
   let sortOrder = { post_date: -1 };
