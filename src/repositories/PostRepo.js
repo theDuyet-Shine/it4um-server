@@ -20,7 +20,7 @@ export const deletePostById = async (id) => {
 };
 
 export const filterPost = async ({ sort, tag, search, page }) => {
-  const POSTS_PER_PAGE = 10;
+  const POSTS_PER_PAGE = 5;
   const skip = (page - 1) * POSTS_PER_PAGE;
 
   let query = {};
