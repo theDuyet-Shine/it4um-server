@@ -3,8 +3,9 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { handleConnectDB } from "./mongoConfig.js";
 import authRouter from "./routes/authRoute.js";
-import { authMiddleware } from "./middlewares/authMiddleware.js";
+import { userAuthMiddleware } from "./middlewares/authMiddleware.js";
 import userRouter from "./routes/userRoute.js";
+import postRouter from "./routes/postRoute.js";
 
 dotenv.config();
 
@@ -21,7 +22,8 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/auth", authRouter);
-app.use("/user", authMiddleware, userRouter);
+app.use("/user", userAuthMiddleware, userRouter);
+app.use("/post", postRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}!`);

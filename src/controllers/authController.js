@@ -1,4 +1,9 @@
-import { loginService, signupService } from "../services/authService.js";
+import {
+  adminLogin,
+  adminSignup,
+  loginService,
+  signupService,
+} from "../services/authService.js";
 import { sendMail } from "../services/otpService.js";
 import {
   getOtp,
@@ -67,6 +72,28 @@ export const login = async (req, res) => {
     }
     const { token, user } = await loginService(username, password);
     res.status(200).json({ token, user });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const adminSignupController = async (req, res) => {
+  try {
+    const newAdmin = await adminSignup(req.body);
+    res.status(201).json(newAdmin);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const adminloginController = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ error: "Missing username or password!" });
+    }
+    const { token, admin } = await adminLogin(username, password);
+    res.status(200).json({ token, admin });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

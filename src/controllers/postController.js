@@ -1,0 +1,70 @@
+import {
+  createPostService,
+  deletePostService,
+  filterPostService,
+  getPostByIdService,
+  updatePostService,
+} from "../services/postService.js";
+
+export const createPostController = async (req, res) => {
+  try {
+    const postData = req.body;
+    const newPost = await createPostService(postData);
+    res.status(201).json(newPost);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const getPostByIdController = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const post = await getPostByIdService(postId);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const updatePostController = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const updateData = req.body;
+    const updatedPost = await updatePostService(postId, updateData);
+    res.json(updatedPost);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const deletePostController = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    await deletePostService(postId);
+    res.json({ message: "Post deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const filterPostController = async (req, res) => {
+  try {
+    const { sort, tag, search, page } = req.query;
+
+    const pageNumber = parseInt(page, 10) || 1;
+
+    const { posts, totalPages } = await filterPostService({
+      sort,
+      tag,
+      search,
+      page: pageNumber,
+    });
+
+    res.json({ posts, totalPages });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
