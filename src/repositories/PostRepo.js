@@ -6,7 +6,7 @@ export const createPost = async (postData) => {
 };
 
 export const getPostById = async (id) => {
-  const post = await postModel.findById(id).populate("author like_by").exec();
+  const post = await postModel.findById(id).populate("author").exec();
   return post;
 };
 
