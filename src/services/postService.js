@@ -1,3 +1,4 @@
+import { postModel } from "../models/Post.js";
 import {
   createPost,
   deletePostById,
@@ -36,4 +37,41 @@ export const deletePostService = async (id) => {
 
 export const filterPostService = async (filterParams) => {
   return await filterPost(filterParams);
+};
+
+export const likePostService = async (userId, postId) => {
+  try {
+    // Increase total_likes by 1 and add userId to like_by array
+    const updatedPost = await postModel.findByIdAndUpdate(
+      postId,
+      {
+        $inc: { total_likes: 1 },
+        $addToSet: { like_by: userId }, // Add userId to like_by array if not already present
+      },
+      { new: true }
+    );
+
+    return updatedPost;
+  } catch (error) {
+    console.error("Error in likePostService:", error);
+    throw error;
+  }
+};
+
+export const unlikePostService = async (userId, postId) => {
+  try {
+    const updatedPost = await postModel.findByIdAndUpdate(
+      postId,
+      {
+        $inc: { total_likes: -1 },
+        $pull: { like_by: userId },
+      },
+      { new: true }
+    );
+
+    return updatedPost;
+  } catch (error) {
+    console.error("Error in unlikePostService:", error);
+    throw error;
+  }
 };

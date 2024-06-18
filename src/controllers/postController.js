@@ -3,6 +3,8 @@ import {
   deletePostService,
   filterPostService,
   getPostByIdService,
+  likePostService,
+  unlikePostService,
   updatePostService,
 } from "../services/postService.js";
 
@@ -64,6 +66,26 @@ export const filterPostController = async (req, res) => {
     });
 
     res.json({ posts, totalPages });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const likePostController = async (req, res) => {
+  try {
+    const { userId, postId } = req.body;
+    const updatedPost = await likePostService(userId, postId);
+    res.json(updatedPost);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const unlikePostController = async (req, res) => {
+  try {
+    const { userId, postId } = req.body;
+    const updatedPost = await unlikePostService(userId, postId);
+    res.json(updatedPost);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -5,6 +5,8 @@ import {
   updatePostController,
   deletePostController,
   filterPostController,
+  likePostController,
+  unlikePostController,
 } from "../controllers/postController.js";
 import {
   userAuthMiddleware,
@@ -22,5 +24,9 @@ postRouter.put("/:id", userAuthMiddleware, updatePostController);
 postRouter.delete("/:id", combinedMiddleware, deletePostController);
 
 postRouter.get("/", filterPostController);
+
+postRouter.post("/like", userAuthMiddleware, likePostController);
+
+postRouter.post("/unlike", userAuthMiddleware, unlikePostController);
 
 export default postRouter;
