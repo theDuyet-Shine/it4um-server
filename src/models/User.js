@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   expertise: { type: String, default: null },
   total_post: { type: Number, default: 0 },
+  violation_score: { type: Number, default: 0 },
 });
 
 export const userModel = mongoose.model("user", userSchema);
