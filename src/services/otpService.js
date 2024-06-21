@@ -31,8 +31,8 @@ export const sendMail = async (email, otp) => {
   const mailOptions = {
     from: ADMIN_EMAIL_ADDRESS,
     to: email,
-    subject: "OTP Verification",
-    text: `Your OTP (One Time Password) for verification is: ${otp}`,
+    subject: "Mã xác nhận OTP - One Time Password",
+    text: `Mã OTP của bạn là ${otp}. Lưu ý mã sẽ hết hạn sau 3 phút!`,
   };
 
   // Send email
