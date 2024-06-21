@@ -8,7 +8,7 @@ import { sendMail } from "../services/otpService.js";
 import {
   getOtp,
   storeOtp,
-  validateOtp as validateOtpInStore,
+  validateOtpInStore,
   deleteOtp,
 } from "../utils/otpStore.js";
 
