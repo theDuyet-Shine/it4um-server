@@ -20,3 +20,19 @@ export const updateUserByIdService = async (id, userData) => {
     throw error;
   }
 };
+
+export const changePasswordService = async (userId, newPassword) => {
+  try {
+    const user = await findUserById(userId);
+    if (!user) throw new Error("User not found");
+
+    const hashedNewPassword = await hashPassword(newPassword);
+
+    const updatedUser = await updateUserById(userId, {
+      password: hashedNewPassword,
+    });
+    return updatedUser;
+  } catch (error) {
+    throw error;
+  }
+};
