@@ -33,13 +33,12 @@ export const updateUserByIdController = async (req, res) => {
 export const changePasswordController = async (req, res) => {
   try {
     const { id } = req.params;
-    const password = req.body;
+    const { password } = req.body;
 
     if (!id) return res.status(400).json({ message: "Id not provided" });
     if (!password)
       return res.status(400).json({ message: "Password not provided" });
-    const newPassword = password.toString();
-    const updatedUser = await changePasswordService(id, newPassword);
+    const updatedUser = await changePasswordService(id, password);
     res
       .status(200)
       .json({ message: "Password changed successfully", user: updatedUser });
