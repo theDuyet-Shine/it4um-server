@@ -1,4 +1,5 @@
 import { findUserById, updateUserById } from "../repositories/UserRepo.js";
+import { hashPassword } from "../utils/passwordUtil.js";
 
 export const getUserByIdService = async (id) => {
   try {
@@ -20,14 +21,16 @@ export const updateUserByIdService = async (id, userData) => {
     throw error;
   }
 };
-
 export const changePasswordService = async (userId, newPassword) => {
   try {
+    // Lấy thông tin người dùng
     const user = await findUserById(userId);
     if (!user) throw new Error("User not found");
 
+    // Hash mật khẩu mới
     const hashedNewPassword = await hashPassword(newPassword);
 
+    // Cập nhật mật khẩu mới
     const updatedUser = await updateUserById(userId, {
       password: hashedNewPassword,
     });

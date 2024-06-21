@@ -1,4 +1,5 @@
 import {
+  changePasswordService,
   getUserByIdService,
   updateUserByIdService,
 } from "../services/userService.js";
@@ -33,10 +34,12 @@ export const changePasswordController = async (req, res) => {
   try {
     const { id } = req.params;
     const password = req.body;
+
     if (!id) return res.status(400).json({ message: "Id not provided" });
     if (!password)
       return res.status(400).json({ message: "Password not provided" });
-    const updatedUser = await changePasswordService(id, password);
+    const newPassword = password.toString();
+    const updatedUser = await changePasswordService(id, newPassword);
     res
       .status(200)
       .json({ message: "Password changed successfully", user: updatedUser });
