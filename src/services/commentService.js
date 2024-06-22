@@ -27,17 +27,10 @@ const createCommentService = async (commentData) => {
         console.log("This is a reply to another comment");
 
         // Fetch the parent comment to get the author's ID
-        const parentComment = await getCommentById(commentData.reply_to._id);
+        const parentComment = await getCommentById(commentData.reply_to);
         console.log("Parent comment fetched:", parentComment);
 
-        // Fetch the commenter for the new comment
-        const commenter = await findUserById(commentData.commenter_id);
-        console.log("Commenter fetched:", commenter);
-
-        // Check if the commenter of the new comment is the same as the parent commenter
-        if (
-          commenter._id.toString() !== parentComment.commenter_id.toString()
-        ) {
+        if (parentComment.commenter_id !== commentData.commenter_id) {
           // Fetch parent commenter
           const parentCommenter = await findUserById(
             parentComment.commenter_id
@@ -45,13 +38,12 @@ const createCommentService = async (commentData) => {
           console.log("Parent commenter fetched:", parentCommenter);
 
           if (parentCommenter) {
-            // Create notification only if not self-reply
             const notificationData = {
               type: "reply",
               user_id: parentComment.commenter_id,
               commenter_id: commentData.commenter_id,
               post_id: post._id,
-              message: `${commenter.fullname} đã trả lời vào bình luận của bạn`,
+              message: `${newComment.commenter_id.fullname} đã trả lời vào bình luận của bạn`,
             };
 
             await createNotification(notificationData);
