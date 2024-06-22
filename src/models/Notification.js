@@ -13,7 +13,7 @@ const notificationSchema = new mongoose.Schema({
   },
   post_id: { type: mongoose.Schema.Types.ObjectId, ref: "post" },
   message: { type: String },
-  comment_at: { type: Date, default: Date.now },
+  created_at: { type: Date, default: Date.now },
   status: { type: String, default: "unread" },
 });
 
