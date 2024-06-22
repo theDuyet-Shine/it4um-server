@@ -30,7 +30,7 @@ const createCommentService = async (commentData) => {
         const parentComment = await getCommentById(commentData.reply_to);
         console.log("Parent comment fetched:", parentComment);
 
-        if (parentComment.commenter_id !== commentData.commenter_id) {
+        if (commentData.commenter_id !== commentData.user_id) {
           // Fetch parent commenter
           const parentCommenter = await findUserById(
             parentComment.commenter_id
@@ -52,15 +52,13 @@ const createCommentService = async (commentData) => {
         }
       } else {
         console.log("This is a top-level comment");
-
-        // Check if commenter is not the post author
-        if (commentData.commenter_id.toString() !== post.author.toString()) {
-          // Fetch commenter
+        if (
+          commentData.user_id.toString() !== commentData.commenter.toString()
+        ) {
           const commenter = await findUserById(commentData.commenter_id);
           console.log("Commenter fetched:", commenter);
 
           if (commenter) {
-            // Create notification only if commenter is not post author
             const notificationData = {
               type: "comment",
               user_id: post.author,
