@@ -30,7 +30,13 @@ const createCommentService = async (commentData) => {
         const parentComment = await getCommentById(commentData.reply_to);
         console.log("Parent comment fetched:", parentComment);
 
-        if (commentData.user_id !== commentData.commenter_id) {
+        if (
+          parentComment.commenter_id._id.toString() !== commentData.commenter_id
+        ) {
+          console.log(
+            parentComment.commenter_id._id.toString(),
+            commentData.commenter_id
+          );
           // Fetch parent commenter
           const parentCommenter = await findUserById(
             parentComment.commenter_id
@@ -52,14 +58,19 @@ const createCommentService = async (commentData) => {
         }
       } else {
         console.log("This is a top-level comment");
-        if (commentData.user_id !== commentData.commenter_id) {
+        if (post.author._id.toString() !== commentData.commenter_id) {
+          console.log(
+            post.author._id,
+            commentData.commenter_id,
+            post.author._id !== commentData.commenter_id
+          );
           const commenter = await findUserById(commentData.commenter_id);
           console.log("Commenter fetched:", commenter);
 
           if (commenter) {
             const notificationData = {
               type: "comment",
-              user_id: post.author,
+              user_id: post.author._id,
               commenter_id: commentData.commenter_id,
               post_id: post._id,
               message: `${commenter.fullname} đã bình luận về bài viết của bạn`,
@@ -73,7 +84,6 @@ const createCommentService = async (commentData) => {
           }
         }
       }
-
       return newComment;
     }
   } catch (error) {
