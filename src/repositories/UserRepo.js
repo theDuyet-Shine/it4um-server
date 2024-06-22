@@ -44,10 +44,20 @@ const deleteUserById = async (id) => {
   }
 };
 
+const checkDuplicate = async (query) => {
+  try {
+    const existingUser = await userModel.findOne(query);
+    return existingUser; // Trả về user nếu đã tồn tại, hoặc null nếu không tồn tại
+  } catch (error) {
+    throw error;
+  }
+};
+
 export {
   createUser,
   findUserById,
   updateUserById,
   deleteUserById,
   findUserByUsername,
+  checkDuplicate,
 };

@@ -1,10 +1,27 @@
 import { comparePassword, hashPassword } from "../utils/passwordUtil.js";
-import { createUser, findUserByUsername } from "../repositories/UserRepo.js";
+import {
+  checkDuplicate,
+  createUser,
+  findUserByUsername,
+} from "../repositories/UserRepo.js";
 import jwt from "jsonwebtoken";
 import { createAdmin, findAdminByUsername } from "../repositories/adminRepo.js";
 
 const signupService = async (userData) => {
   try {
+    const existingUsername = await checkDuplicate({
+      username: userData.username,
+    });
+    if (existingUsername) {
+      throw new Error("Tên tài khoản đã tồn tại");
+    }
+
+    // Kiểm tra xem email đã tồn tại chưa
+    const existingEmail = await checkDuplicate({ email: userData.email });
+    if (existingEmail) {
+      throw new Error("Email đã được sử dụng");
+    }
+
     userData.password = await hashPassword(userData.password);
     const newUser = await createUser(userData);
     return newUser;

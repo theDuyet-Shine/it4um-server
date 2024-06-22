@@ -25,13 +25,13 @@ const sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
-      return res.status(400).json({ error: "Missing email in request body" });
+      return res.status(400).json({ error: "Thiếu email trong yêu cầu" });
     }
 
     const otp = Math.floor(100000 + Math.random() * 900000);
     storeOtp(email, otp);
     await sendMail(email, otp);
-    res.status(200).json({ message: "OTP sent successfully" });
+    res.status(200).json({ message: "OTP đã được gửi thành công" });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -43,22 +43,24 @@ const validateOtp = async (req, res) => {
     if (!email || !otp) {
       return res
         .status(400)
-        .json({ error: "Missing email or OTP in request body" });
+        .json({ error: "Thiếu email hoặc OTP trong yêu cầu" });
     }
 
     const storedOtp = getOtp(email);
     console.log(storedOtp);
     if (!storedOtp) {
-      return res.status(400).json({ error: "OTP not found or expired" });
+      return res
+        .status(400)
+        .json({ error: "OTP không tồn tại hoặc đã hết hạn" });
     }
 
     if (storedOtp.otp.toString() !== otp.toString()) {
-      return res.status(400).json({ error: "Invalid OTP" });
+      return res.status(400).json({ error: "OTP không hợp lệ" });
     }
 
     validateOtpInStore(email);
     deleteOtp(email);
-    res.status(200).json({ message: "OTP validated successfully" });
+    res.status(200).json({ message: "OTP đã được xác thực thành công" });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -68,7 +70,9 @@ const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      return res.status(400).json({ error: "Missing username or password!" });
+      return res
+        .status(400)
+        .json({ error: "Thiếu tên đăng nhập hoặc mật khẩu!" });
     }
     const { token, user } = await loginService(username, password);
     res.status(200).json({ token, user });
@@ -90,7 +94,9 @@ const adminloginController = async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
-      return res.status(400).json({ error: "Missing username or password!" });
+      return res
+        .status(400)
+        .json({ error: "Thiếu tên đăng nhập hoặc mật khẩu!" });
     }
     const { token, admin } = await adminLogin(username, password);
     res.status(200).json({ token, admin });
