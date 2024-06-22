@@ -19,12 +19,12 @@ const getNotificationsByUserId = async (req, res) => {
   const { page, perPage } = req.query;
 
   try {
-    const notifications = await getNotificationsByUserIdService(
+    const notificationsData = await getNotificationsByUserIdService(
       id,
       parseInt(page) || 1,
       parseInt(perPage) || 5
     );
-    res.status(200).json({ notifications });
+    res.status(200).json(notificationsData);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

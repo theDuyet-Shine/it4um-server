@@ -20,38 +20,39 @@ const getNotificationById = async (id) => {
   }
 };
 
-const getNotificationsByUserId = async (userId, page = 1, perPage = 5) => {
-  try {
-    const notificationsPromise = notificationModel
-      .find({ user_id: userId })
-      .sort({ created_at: -1 })
-      .skip((page - 1) * perPage)
-      .limit(perPage)
-      .exec();
+const getNotificationsByUserId = async (userId, page, perPage) => {
+  const skip = (page - 1) * perPage;
 
-    const countPromise = notificationModel
-      .countDocuments({ user_id: userId })
-      .exec();
+  const notificationsPromise = notificationModel
+    .find({ user_id: userId })
+    .sort({ created_at: -1 })
+    .skip(skip)
+    .limit(perPage)
+    .populate("commenter_id", "profile_image")
+    .exec();
 
-    const [notifications, allNotificationCount] = await Promise.all([
-      notificationsPromise,
-      countPromise,
-    ]);
+  const totalNotificationsPromise = notificationModel
+    .countDocuments({ user_id: userId })
+    .exec();
 
-    return { notifications, allNotificationCount };
-  } catch (error) {
-    throw new Error(`Error retrieving notifications: ${error.message}`);
-  }
+  const [notifications, totalNotifications] = await Promise.all([
+    notificationsPromise,
+    totalNotificationsPromise,
+  ]);
+
+  return { notifications, totalNotifications };
 };
 
-const updateNotificationStatus = async (notificationId, newStatus) => {
+const updateNotificationStatus = async (id, status) => {
   try {
-    const updatedNotification = await notificationModel
-      .findByIdAndUpdate(notificationId, { status: newStatus }, { new: true })
+    const result = await notificationModel
+      .updateOne({ _id: id }, { $set: { status: status } })
       .exec();
-    return updatedNotification;
+    console.log(result); // Kiểm tra kết quả trả về từ cơ sở dữ liệu
+    return result;
   } catch (error) {
-    throw new Error(`Error updating notification status: ${error.message}`);
+    console.log(`Lỗi khi cập nhật thông báo: ${error.message}`);
+    throw error; // Ném lỗi để hàm gọi có thể bắt và xử lý
   }
 };
 

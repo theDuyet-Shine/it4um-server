@@ -22,12 +22,11 @@ const getNotificationsByUserIdService = async (
 ) => {
   try {
     const notifications = await getNotificationsByUserId(userId, page, perPage);
-
-    if (notifications.length > 0) {
-      const notificationIds = notifications.map(
+    console.log(notifications);
+    if (notifications.notifications.length > 0) {
+      const notificationIds = notifications.notifications.map(
         (notification) => notification._id
       );
-
       await Promise.all(
         notificationIds.map(async (id) => {
           await updateNotificationStatus(id, "read");
