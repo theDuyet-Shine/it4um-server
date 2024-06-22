@@ -30,7 +30,7 @@ const createCommentService = async (commentData) => {
         const parentComment = await getCommentById(commentData.reply_to);
         console.log("Parent comment fetched:", parentComment);
 
-        if (commentData.commenter_id !== commentData.user_id) {
+        if (commentData.user_id !== commentData.commenter_id) {
           // Fetch parent commenter
           const parentCommenter = await findUserById(
             parentComment.commenter_id
