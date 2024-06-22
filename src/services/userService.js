@@ -3,7 +3,7 @@ import { hashPassword } from "../utils/passwordUtil.js";
 
 const getUserByIdService = async (id) => {
   try {
-    const user = await findUserBy;
+    const user = await findUserById(id);
     if (!user) throw new Error("User not found");
     return user;
   } catch (error) {
