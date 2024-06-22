@@ -13,6 +13,11 @@ const commentSchema = new mongoose.Schema({
   },
   content: { type: String, required: true },
   comment_at: { type: Date, default: Date.now },
+  reply_to: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "comment",
+    default: null,
+  },
 });
 
 export const commentModel = mongoose.model("comment", commentSchema);
