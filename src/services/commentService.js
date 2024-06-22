@@ -44,7 +44,7 @@ const createCommentService = async (commentData) => {
               user_id: parentComment.commenter_id,
               commenter_id: commentData.commenter_id,
               post_id: post._id,
-              message: `${commentData.fullname} đã trả lời vào bình luận của bạn`,
+              message: `${parentComment.fullname} đã trả lời vào bình luận của bạn`,
             };
 
             await createNotification(notificationData);
