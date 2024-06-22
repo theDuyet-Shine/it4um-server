@@ -52,7 +52,7 @@ const createCommentService = async (commentData) => {
         }
       } else {
         console.log("This is a top-level comment");
-        if (commentData.user_id !== commentData.commenter) {
+        if (commentData.user_id !== commentData.commenter_id) {
           const commenter = await findUserById(commentData.commenter_id);
           console.log("Commenter fetched:", commenter);
 
