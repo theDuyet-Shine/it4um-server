@@ -8,7 +8,7 @@ import {
   updatePostService,
 } from "../services/postService.js";
 
-export const createPostController = async (req, res) => {
+const createPostController = async (req, res) => {
   try {
     const postData = req.body;
     const newPost = await createPostService(postData);
@@ -18,7 +18,7 @@ export const createPostController = async (req, res) => {
   }
 };
 
-export const getPostByIdController = async (req, res) => {
+const getPostByIdController = async (req, res) => {
   try {
     const postId = req.params.id;
     const post = await getPostByIdService(postId);
@@ -31,7 +31,7 @@ export const getPostByIdController = async (req, res) => {
   }
 };
 
-export const updatePostController = async (req, res) => {
+const updatePostController = async (req, res) => {
   try {
     const postId = req.params.id;
     const updateData = req.body;
@@ -42,7 +42,7 @@ export const updatePostController = async (req, res) => {
   }
 };
 
-export const deletePostController = async (req, res) => {
+const deletePostController = async (req, res) => {
   try {
     const postId = req.params.id;
     await deletePostService(postId);
@@ -52,7 +52,7 @@ export const deletePostController = async (req, res) => {
   }
 };
 
-export const filterPostController = async (req, res) => {
+const filterPostController = async (req, res) => {
   try {
     const { sort, tag, search, page } = req.query;
 
@@ -71,7 +71,7 @@ export const filterPostController = async (req, res) => {
   }
 };
 
-export const likePostController = async (req, res) => {
+const likePostController = async (req, res) => {
   try {
     const { userId, postId } = req.body;
     const updatedPost = await likePostService(userId, postId);
@@ -81,7 +81,7 @@ export const likePostController = async (req, res) => {
   }
 };
 
-export const unlikePostController = async (req, res) => {
+const unlikePostController = async (req, res) => {
   try {
     const { userId, postId } = req.body;
     const updatedPost = await unlikePostService(userId, postId);
@@ -89,4 +89,14 @@ export const unlikePostController = async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+};
+
+export {
+  createPostController,
+  getPostByIdController,
+  updatePostController,
+  deletePostController,
+  filterPostController,
+  likePostController,
+  unlikePostController,
 };

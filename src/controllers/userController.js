@@ -4,7 +4,7 @@ import {
   updateUserByIdService,
 } from "../services/userService.js";
 
-export const getUserByIdController = async (req, res) => {
+const getUserByIdController = async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) return res.status(400).json({ message: "Id not provided!" });
@@ -15,7 +15,7 @@ export const getUserByIdController = async (req, res) => {
   }
 };
 
-export const updateUserByIdController = async (req, res) => {
+const updateUserByIdController = async (req, res) => {
   try {
     const { id } = req.params;
     const userData = req.body;
@@ -30,7 +30,7 @@ export const updateUserByIdController = async (req, res) => {
   }
 };
 
-export const changePasswordController = async (req, res) => {
+const changePasswordController = async (req, res) => {
   try {
     const { id } = req.params;
     const { password } = req.body;
@@ -45,4 +45,10 @@ export const changePasswordController = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
+};
+
+export {
+  getUserByIdController,
+  updateUserByIdController,
+  changePasswordController,
 };

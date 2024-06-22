@@ -1,25 +1,25 @@
 import { postModel } from "../models/Post.js";
 
-export const createPost = async (postData) => {
+const createPost = async (postData) => {
   const post = new postModel(postData);
   return await post.save();
 };
 
-export const getPostById = async (id) => {
+const getPostById = async (id) => {
   const post = await postModel.findById(id).populate("author").exec();
   return post;
 };
 
-export const updatePostById = async (id, updateData) => {
+const updatePostById = async (id, updateData) => {
   const post = await postModel.findByIdAndUpdate(id, updateData, { new: true });
   return post;
 };
 
-export const deletePostById = async (id) => {
+const deletePostById = async (id) => {
   return await postModel.findByIdAndDelete(id);
 };
 
-export const filterPost = async ({ sort, tag, search, page }) => {
+const filterPost = async ({ sort, tag, search, page }) => {
   const POSTS_PER_PAGE = 8;
   const skip = (page - 1) * POSTS_PER_PAGE;
 
@@ -47,3 +47,5 @@ export const filterPost = async ({ sort, tag, search, page }) => {
 
   return { posts, totalPages };
 };
+
+export { createPost, getPostById, deletePostById, updatePostById, filterPost };

@@ -1,6 +1,6 @@
 import { commentModel } from "../models/Comment.js";
 
-export const createComment = async (commentData) => {
+const createComment = async (commentData) => {
   try {
     const newComment = await commentModel.create(commentData);
     return newComment;
@@ -9,7 +9,7 @@ export const createComment = async (commentData) => {
   }
 };
 
-export const getComments = async (postId, page) => {
+const getComments = async (postId, page) => {
   try {
     const limit = 5; // Số lượng comment trên mỗi trang
     const skip = (page - 1) * limit;
@@ -33,3 +33,5 @@ export const getComments = async (postId, page) => {
     throw error;
   }
 };
+
+export { createComment, getComments };

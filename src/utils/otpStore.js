@@ -1,11 +1,11 @@
 const otpStore = new Map();
 const OTP_EXPIRATION_TIME = 3 * 60 * 1000; // Thời gian hết hạn OTP là 3 phút (đơn vị là milliseconds)
 
-export const storeOtp = (email, otp) => {
+const storeOtp = (email, otp) => {
   otpStore.set(email, { otp, validated: false, timestamp: Date.now() });
 };
 
-export const getOtp = (email) => {
+const getOtp = (email) => {
   const otpData = otpStore.get(email);
   if (otpData && Date.now() - otpData.timestamp < OTP_EXPIRATION_TIME) {
     return otpData;
@@ -15,7 +15,7 @@ export const getOtp = (email) => {
   }
 };
 
-export const validateOtpInStore = (email) => {
+const validateOtpInStore = (email) => {
   const otpData = getOtp(email);
   if (otpData) {
     otpData.validated = true;
@@ -23,11 +23,13 @@ export const validateOtpInStore = (email) => {
   }
 };
 
-export const isOtpValidated = (email) => {
+const isOtpValidated = (email) => {
   const otpData = getOtp(email);
   return otpData && otpData.validated;
 };
 
-export const deleteOtp = (email) => {
+const deleteOtp = (email) => {
   otpStore.delete(email);
 };
+
+export { storeOtp, getOtp, validateOtpInStore, isOtpValidated, deleteOtp };

@@ -1,7 +1,9 @@
 import { createComment, getComments } from "../repositories/CommentRepo.js";
+import { notificationRepo } from "../repositories/NotificationRepo.js";
 import { getPostById, updatePostById } from "../repositories/PostRepo.js";
+import { findUserById } from "../repositories/UserRepo.js";
 
-export const createCommentService = async (commentData) => {
+const createCommentService = async (commentData) => {
   try {
     const post = await getPostById(commentData.post_id);
     if (post) {
@@ -9,6 +11,21 @@ export const createCommentService = async (commentData) => {
         $inc: { total_comments: 1 },
       });
       const newComment = createComment(commentData);
+      if (commentData.commenter_id.toString() !== post.author.toString()) {
+        const commenter = await findUserById(commentData.commenter_id);
+        if (commenter) {
+          const notificationData = {
+            type: "comment",
+            user_id: post.author,
+            commenter_id: commenter._id,
+            post_id: post._id,
+            message: `${commenter.fullname} đã bình luận về bài viết của bạn`,
+          };
+
+          await notificationRepo.createNotification(notificationData);
+        }
+      }
+
       return newComment;
     }
   } catch (error) {
@@ -16,7 +33,7 @@ export const createCommentService = async (commentData) => {
   }
 };
 
-export const getCommentsService = async (postId, page) => {
+const getCommentsService = async (postId, page) => {
   try {
     const comments = await getComments(postId, page);
     return comments;
@@ -24,3 +41,5 @@ export const getCommentsService = async (postId, page) => {
     throw error;
   }
 };
+
+export { getCommentsService, createCommentService };

@@ -8,6 +8,7 @@ import userRouter from "./routes/userRoute.js";
 import postRouter from "./routes/postRoute.js";
 import tagRouter from "./routes/tagRoute.js";
 import commentRouter from "./routes/commentRoute.js";
+import notificationRouter from "./routes/notificationRoute.js";
 
 dotenv.config();
 
@@ -28,6 +29,7 @@ app.use("/user", userAuthMiddleware, userRouter);
 app.use("/post", postRouter);
 app.use("/tag", tagRouter);
 app.use("/comment", commentRouter);
+app.use("/notification", notificationRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}!`);

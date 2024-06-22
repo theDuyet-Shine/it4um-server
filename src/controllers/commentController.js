@@ -3,7 +3,7 @@ import {
   getCommentsService,
 } from "../services/commentService.js";
 
-export const createCommentController = async (req, res) => {
+const createCommentController = async (req, res) => {
   try {
     const commentData = req.body;
     const newComment = await createCommentService(commentData);
@@ -13,7 +13,7 @@ export const createCommentController = async (req, res) => {
   }
 };
 
-export const getCommentsController = async (req, res) => {
+const getCommentsController = async (req, res) => {
   try {
     const { postId, page } = req.query;
     const comments = await getCommentsService(postId, page);
@@ -22,3 +22,5 @@ export const getCommentsController = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export { createCommentController, getCommentsController };

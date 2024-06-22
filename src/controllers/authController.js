@@ -12,7 +12,7 @@ import {
   deleteOtp,
 } from "../utils/otpStore.js";
 
-export const signup = async (req, res) => {
+const signup = async (req, res) => {
   try {
     const newUser = await signupService(req.body);
     res.status(201).json(newUser);
@@ -21,7 +21,7 @@ export const signup = async (req, res) => {
   }
 };
 
-export const sendOtp = async (req, res) => {
+const sendOtp = async (req, res) => {
   try {
     const { email } = req.body;
     if (!email) {
@@ -37,7 +37,7 @@ export const sendOtp = async (req, res) => {
   }
 };
 
-export const validateOtp = async (req, res) => {
+const validateOtp = async (req, res) => {
   try {
     const { email, otp } = req.body;
     if (!email || !otp) {
@@ -64,7 +64,7 @@ export const validateOtp = async (req, res) => {
   }
 };
 
-export const login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -77,7 +77,7 @@ export const login = async (req, res) => {
   }
 };
 
-export const adminSignupController = async (req, res) => {
+const adminSignupController = async (req, res) => {
   try {
     const newAdmin = await adminSignup(req.body);
     res.status(201).json(newAdmin);
@@ -86,7 +86,7 @@ export const adminSignupController = async (req, res) => {
   }
 };
 
-export const adminloginController = async (req, res) => {
+const adminloginController = async (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !password) {
@@ -97,4 +97,13 @@ export const adminloginController = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
+};
+
+export {
+  signup,
+  login,
+  sendOtp,
+  validateOtp,
+  adminloginController,
+  adminSignupController,
 };

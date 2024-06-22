@@ -8,7 +8,7 @@ import {
 } from "../repositories/PostRepo.js";
 import { updateUserById } from "../repositories/UserRepo.js";
 
-export const createPostService = async (postData) => {
+const createPostService = async (postData) => {
   try {
     const newPost = await createPost(postData);
 
@@ -21,25 +21,25 @@ export const createPostService = async (postData) => {
   }
 };
 
-export const getPostByIdService = async (id) => {
+const getPostByIdService = async (id) => {
   const post = await getPostById(id);
   await updatePostById(post._id, { $inc: { total_views: 1 } });
   return post;
 };
 
-export const updatePostService = async (id, updateData) => {
+const updatePostService = async (id, updateData) => {
   return await updatePostById(id, updateData);
 };
 
-export const deletePostService = async (id) => {
+const deletePostService = async (id) => {
   return await deletePostById(id);
 };
 
-export const filterPostService = async (filterParams) => {
+const filterPostService = async (filterParams) => {
   return await filterPost(filterParams);
 };
 
-export const likePostService = async (userId, postId) => {
+const likePostService = async (userId, postId) => {
   try {
     // Increase total_likes by 1 and add userId to like_by array
     const updatedPost = await postModel.findByIdAndUpdate(
@@ -58,7 +58,7 @@ export const likePostService = async (userId, postId) => {
   }
 };
 
-export const unlikePostService = async (userId, postId) => {
+const unlikePostService = async (userId, postId) => {
   try {
     const updatedPost = await postModel.findByIdAndUpdate(
       postId,
@@ -74,4 +74,14 @@ export const unlikePostService = async (userId, postId) => {
     console.error("Error in unlikePostService:", error);
     throw error;
   }
+};
+
+export {
+  createPostService,
+  getPostByIdService,
+  updatePostService,
+  deletePostService,
+  likePostService,
+  unlikePostService,
+  filterPostService,
 };
