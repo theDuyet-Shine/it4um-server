@@ -55,7 +55,7 @@ const getUnreadNotifications = async (userId) => {
   }
 };
 
-export const notificationRepo = {
+export {
   createNotification,
   getNotificationById,
   getNotificationsByUserId,

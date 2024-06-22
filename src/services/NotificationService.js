@@ -1,8 +1,12 @@
-import { notificationRepo } from "../repositories/NotificationRepo.js";
+import {
+  getNotificationsByUserId,
+  getUnreadNotifications,
+  updateNotificationStatus,
+} from "../repositories/NotificationRepo.js";
 
 const getUnreadNotificationService = async (userId) => {
   try {
-    const unreadCount = await notificationRepo.getUnreadNotifications(userId);
+    const unreadCount = await getUnreadNotifications(userId);
     return unreadCount;
   } catch (error) {
     throw new Error(
@@ -17,11 +21,7 @@ const getNotificationsByUserIdService = async (
   perPage = 5
 ) => {
   try {
-    const notifications = await notificationRepo.getNotificationsByUserId(
-      userId,
-      page,
-      perPage
-    );
+    const notifications = await getNotificationsByUserId(userId, page, perPage);
 
     if (notifications.length > 0) {
       const notificationIds = notifications.map(
@@ -30,7 +30,7 @@ const getNotificationsByUserIdService = async (
 
       await Promise.all(
         notificationIds.map(async (id) => {
-          await notificationRepo.updateNotificationStatus(id, "read");
+          await updateNotificationStatus(id, "read");
         })
       );
     }

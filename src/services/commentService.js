@@ -1,5 +1,5 @@
 import { createComment, getComments } from "../repositories/CommentRepo.js";
-import { notificationRepo } from "../repositories/NotificationRepo.js";
+import { createNotification } from "../repositories/NotificationRepo.js";
 import { getPostById, updatePostById } from "../repositories/PostRepo.js";
 import { findUserById } from "../repositories/UserRepo.js";
 
@@ -22,7 +22,7 @@ const createCommentService = async (commentData) => {
             message: `${commenter.fullname} đã bình luận về bài viết của bạn`,
           };
 
-          await notificationRepo.createNotification(notificationData);
+          await createNotification(notificationData);
         }
       }
 
