@@ -22,12 +22,23 @@ const getNotificationById = async (id) => {
 
 const getNotificationsByUserId = async (userId, page = 1, perPage = 5) => {
   try {
-    return await notificationModel
+    const notificationsPromise = notificationModel
       .find({ user_id: userId })
       .sort({ created_at: -1 })
       .skip((page - 1) * perPage)
       .limit(perPage)
       .exec();
+
+    const countPromise = notificationModel
+      .countDocuments({ user_id: userId })
+      .exec();
+
+    const [notifications, allNotificationCount] = await Promise.all([
+      notificationsPromise,
+      countPromise,
+    ]);
+
+    return { notifications, allNotificationCount };
   } catch (error) {
     throw new Error(`Error retrieving notifications: ${error.message}`);
   }
