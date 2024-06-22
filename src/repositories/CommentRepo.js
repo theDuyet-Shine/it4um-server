@@ -9,7 +9,7 @@ const createComment = async (commentData) => {
     const populatedComment = await commentModel
       .findById(newComment._id)
       .populate("commenter_id", "fullname profile_image")
-      .populate("reply_to", "content");
+      .populate("reply_to");
 
     return populatedComment;
   } catch (error) {
