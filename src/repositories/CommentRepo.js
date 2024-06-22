@@ -2,8 +2,16 @@ import { commentModel } from "../models/Comment.js";
 
 const createComment = async (commentData) => {
   try {
+    // Create the comment
     const newComment = await commentModel.create(commentData);
-    return newComment;
+
+    // Populate the fields after creation
+    const populatedComment = await commentModel
+      .findById(newComment._id)
+      .populate("commenter_id", "fullname profile_image")
+      .populate("reply_to", "content"); // Populate the reply_to field if needed
+
+    return populatedComment;
   } catch (error) {
     throw error;
   }
