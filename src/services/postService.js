@@ -1,8 +1,11 @@
 import { postModel } from "../models/Post.js";
+import { deleteCommentByPostId } from "../repositories/CommentRepo.js";
+import { deleteNotificationByPostId } from "../repositories/NotificationRepo.js";
 import {
   createPost,
   deletePostById,
   filterPost,
+  getPostByAuthorId,
   getPostById,
   updatePostById,
 } from "../repositories/PostRepo.js";
@@ -32,7 +35,20 @@ const updatePostService = async (id, updateData) => {
 };
 
 const deletePostService = async (id) => {
-  return await deletePostById(id);
+  try {
+    const post = await getPostById(id);
+    if (!post) {
+      throw new Error(`Post with id: ${id} not found`);
+    }
+
+    await updateUserById(post.author, { $inc: { total_post: -1 } });
+    await deleteNotificationByPostId(id);
+    await deleteCommentByPostId(id);
+    return await deletePostById(id);
+  } catch (error) {
+    console.error("Error in deletePostService:", error);
+    throw error;
+  }
 };
 
 const filterPostService = async (filterParams) => {
@@ -76,6 +92,23 @@ const unlikePostService = async (userId, postId) => {
   }
 };
 
+const getPostsByAuthorIdService = async (
+  authorId,
+  { sort, tag, search, page, limit }
+) => {
+  try {
+    return await getPostByAuthorId(authorId, {
+      sort,
+      tag,
+      search,
+      page,
+      limit,
+    });
+  } catch (error) {
+    throw new Error(`Failed to fetch posts from service: ${error.message}`);
+  }
+};
+
 export {
   createPostService,
   getPostByIdService,
@@ -84,4 +117,5 @@ export {
   likePostService,
   unlikePostService,
   filterPostService,
+  getPostsByAuthorIdService,
 };

@@ -67,10 +67,20 @@ const getUnreadNotifications = async (userId) => {
   }
 };
 
+const deleteNotificationByPostId = async (postId) => {
+  try {
+    const result = await notificationModel.deleteMany({ post_id: postId });
+    return result;
+  } catch (error) {
+    throw new Error(`Failed to delete notifications: ${error.message}`);
+  }
+};
+
 export {
   createNotification,
   getNotificationById,
   getNotificationsByUserId,
   updateNotificationStatus,
   getUnreadNotifications,
+  deleteNotificationByPostId,
 };

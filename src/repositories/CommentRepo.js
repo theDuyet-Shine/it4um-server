@@ -58,4 +58,13 @@ const getComments = async (postId, page) => {
   };
 };
 
-export { createComment, getComments, getCommentById };
+const deleteCommentByPostId = async (postId) => {
+  try {
+    const result = await commentModel.deleteMany({ post_id: postId });
+    return result;
+  } catch (error) {
+    throw new Error(`Failed to delete comments: ${error.message}`);
+  }
+};
+
+export { createComment, getComments, getCommentById, deleteCommentByPostId };

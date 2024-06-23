@@ -3,11 +3,12 @@ import {
   deletePostService,
   filterPostService,
   getPostByIdService,
+  getPostsByAuthorIdService,
   likePostService,
   unlikePostService,
   updatePostService,
 } from "../services/postService.js";
-
+import mongoose from "mongoose";
 const createPostController = async (req, res) => {
   try {
     const postData = req.body;
@@ -64,7 +65,6 @@ const filterPostController = async (req, res) => {
       search,
       page: pageNumber,
     });
-
     res.json({ posts, totalPages });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -91,6 +91,24 @@ const unlikePostController = async (req, res) => {
   }
 };
 
+const getPostsByAuthorIdController = async (req, res) => {
+  const { authorId } = req.params;
+  const { sort, tag, search, page, limit } = req.query;
+
+  try {
+    const result = await getPostsByAuthorIdService(authorId, {
+      sort,
+      tag,
+      search,
+      page,
+      limit,
+    });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 export {
   createPostController,
   getPostByIdController,
@@ -99,4 +117,5 @@ export {
   filterPostController,
   likePostController,
   unlikePostController,
+  getPostsByAuthorIdController,
 };

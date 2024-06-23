@@ -7,6 +7,7 @@ import {
   filterPostController,
   likePostController,
   unlikePostController,
+  getPostsByAuthorIdController,
 } from "../controllers/postController.js";
 import {
   userAuthMiddleware,
@@ -24,6 +25,12 @@ postRouter.put("/:id", userAuthMiddleware, updatePostController);
 postRouter.delete("/:id", combinedMiddleware, deletePostController);
 
 postRouter.get("/", filterPostController);
+
+postRouter.get(
+  "/user-post/:authorId",
+  userAuthMiddleware,
+  getPostsByAuthorIdController
+);
 
 postRouter.post("/like", userAuthMiddleware, likePostController);
 

@@ -48,4 +48,56 @@ const filterPost = async ({ sort, tag, search, page }) => {
   return { posts, totalPages };
 };
 
-export { createPost, getPostById, deletePostById, updatePostById, filterPost };
+const getPostByAuthorId = async (
+  authorId,
+  { sort, tag, search, page, limit }
+) => {
+  try {
+    page = parseInt(page) || 1;
+    limit = parseInt(limit) || 5;
+
+    const POSTS_PER_PAGE = limit;
+    const skip = (page - 1) * POSTS_PER_PAGE;
+
+    let query = { author: authorId };
+
+    if (tag) {
+      const tagsArray = tag.split(",");
+      query.tags = { $all: tagsArray };
+    }
+
+    if (search) {
+      query.title = { $regex: search, $options: "i" };
+    }
+
+    let sortOrder = { post_date: -1 };
+    if (sort === "likes") sortOrder = { total_likes: -1 };
+    if (sort === "views") sortOrder = { total_views: -1 };
+
+    const posts = await postModel
+      .find(query)
+      .sort(sortOrder)
+      .skip(skip)
+      .limit(POSTS_PER_PAGE)
+      .populate("author like_by")
+      .exec();
+
+    const totalPosts = await postModel.countDocuments(query);
+    const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
+
+    return { posts, currentPage: page, totalPages };
+  } catch (error) {
+    throw new Error(
+      `Failed to fetch posts for author with ID ${authorId}: ${error.message}`
+    );
+  }
+};
+
+export {
+  createPost,
+  getPostById,
+  deletePostById,
+  updatePostById,
+  filterPost,
+  getPostByAuthorId,
+};
