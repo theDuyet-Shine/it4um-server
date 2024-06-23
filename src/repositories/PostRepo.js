@@ -31,7 +31,7 @@ const filterPost = async ({ sort, tag, search, page }) => {
   }
   if (search) query.title = { $regex: search, $options: "i" };
 
-  let sortOrder = { post_date: -1 };
+  let sortOrder = { modify_date: -1 };
   if (sort === "likes") sortOrder = { total_likes: -1 };
   if (sort === "views") sortOrder = { total_views: -1 };
 
@@ -70,7 +70,7 @@ const getPostByAuthorId = async (
       query.title = { $regex: search, $options: "i" };
     }
 
-    let sortOrder = { post_date: -1 };
+    let sortOrder = { modify_date: -1 };
     if (sort === "likes") sortOrder = { total_likes: -1 };
     if (sort === "views") sortOrder = { total_views: -1 };
 
