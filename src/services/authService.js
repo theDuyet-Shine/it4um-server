@@ -6,9 +6,19 @@ import {
 } from "../repositories/UserRepo.js";
 import jwt from "jsonwebtoken";
 import { createAdmin, findAdminByUsername } from "../repositories/adminRepo.js";
+import { emailBanListModel } from "../models/EmailBanList.js";
 
 const signupService = async (userData) => {
   try {
+    // Kiểm tra xem email có trong emailBanList không
+    const emailBanned = await emailBanListModel.findOne({
+      email: userData.email,
+    });
+    if (emailBanned) {
+      throw new Error("Email đã bị cấm sử dụng");
+    }
+
+    // Kiểm tra xem tên tài khoản đã tồn tại chưa
     const existingUsername = await checkDuplicate({
       username: userData.username,
     });

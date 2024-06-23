@@ -4,6 +4,7 @@ import {
   filterPostService,
   getPostByIdService,
   getPostsByAuthorIdService,
+  getPostsByDateService,
   likePostService,
   unlikePostService,
   updatePostService,
@@ -109,6 +110,18 @@ const getPostsByAuthorIdController = async (req, res) => {
   }
 };
 
+const getPostsByDateController = async (req, res) => {
+  const { date, page } = req.params;
+
+  try {
+    const posts = await getPostsByDateService(date, parseInt(page));
+    res.json(posts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch posts" });
+  }
+};
+
 export {
   createPostController,
   getPostByIdController,
@@ -118,4 +131,5 @@ export {
   likePostController,
   unlikePostController,
   getPostsByAuthorIdController,
+  getPostsByDateController,
 };

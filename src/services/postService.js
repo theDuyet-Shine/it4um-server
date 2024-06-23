@@ -7,6 +7,7 @@ import {
   filterPost,
   getPostByAuthorId,
   getPostById,
+  getPostsByDate,
   updatePostById,
 } from "../repositories/PostRepo.js";
 import { updateUserById } from "../repositories/UserRepo.js";
@@ -109,6 +110,15 @@ const getPostsByAuthorIdService = async (
   }
 };
 
+const getPostsByDateService = async (date, page) => {
+  try {
+    const posts = await getPostsByDate(date, page);
+    return posts;
+  } catch (err) {
+    throw new Error(`Service error: ${err}`);
+  }
+};
+
 export {
   createPostService,
   getPostByIdService,
@@ -118,4 +128,5 @@ export {
   unlikePostService,
   filterPostService,
   getPostsByAuthorIdService,
+  getPostsByDateService,
 };

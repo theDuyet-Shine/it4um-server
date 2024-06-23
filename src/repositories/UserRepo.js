@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import { userModel } from "../models/User.js";
+import { notificationModel } from "../models/Notification.js";
+import { postModel } from "../models/Post.js";
+import { commentModel } from "../models/Comment.js";
 
 const createUser = async (userData) => {
   try {
@@ -38,7 +41,11 @@ const updateUserById = async (id, updateData) => {
 
 const deleteUserById = async (id) => {
   try {
-    return await userModel.findByIdAndDelete(id);
+    await notificationModel.deleteMany({ user_id: id });
+    await postModel.deleteMany({ author: id });
+    await commentModel.deleteMany({ commenter_id: id });
+    const deletedUser = await userModel.findByIdAndDelete(id);
+    return deletedUser;
   } catch (error) {
     throw error;
   }

@@ -8,6 +8,7 @@ import {
   likePostController,
   unlikePostController,
   getPostsByAuthorIdController,
+  getPostsByDateController,
 } from "../controllers/postController.js";
 import {
   userAuthMiddleware,
@@ -31,6 +32,8 @@ postRouter.get(
   userAuthMiddleware,
   getPostsByAuthorIdController
 );
+
+postRouter.get("/statistic/:date/:page", getPostsByDateController);
 
 postRouter.post("/like", userAuthMiddleware, likePostController);
 

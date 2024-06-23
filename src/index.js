@@ -9,6 +9,7 @@ import postRouter from "./routes/postRoute.js";
 import tagRouter from "./routes/tagRoute.js";
 import commentRouter from "./routes/commentRoute.js";
 import notificationRouter from "./routes/notificationRoute.js";
+import adminRouter from "./routes/adminRoute.js";
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ app.use("/post", postRouter);
 app.use("/tag", tagRouter);
 app.use("/comment", commentRouter);
 app.use("/notification", notificationRouter);
+app.use("/admin", adminRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}!`);

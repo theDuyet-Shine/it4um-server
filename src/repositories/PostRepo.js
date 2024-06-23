@@ -94,6 +94,42 @@ const getPostByAuthorId = async (
   }
 };
 
+const getPostsByDate = async (date, page) => {
+  const pageSize = 5;
+  const skip = (page - 1) * pageSize;
+  const startOfDay = new Date(date);
+  startOfDay.setUTCHours(0, 0, 0, 0);
+  const endOfDay = new Date(date);
+  endOfDay.setUTCHours(23, 59, 59, 999);
+
+  try {
+    // Count total number of posts in the given date range
+    const totalPosts = await postModel.countDocuments({
+      modify_date: { $gte: startOfDay, $lte: endOfDay },
+    });
+
+    // Calculate total number of pages
+    const totalPages = Math.ceil(totalPosts / pageSize);
+
+    // Find posts for the specified date range and pagination
+    const posts = await postModel
+      .find({
+        modify_date: { $gte: startOfDay, $lte: endOfDay },
+      })
+      .sort({ modify_date: -1 })
+      .skip(skip)
+      .limit(pageSize)
+      .populate("author");
+
+    return {
+      posts,
+      totalPages,
+    };
+  } catch (err) {
+    throw new Error(`Failed to fetch posts: ${err}`);
+  }
+};
+
 export {
   createPost,
   getPostById,
@@ -101,4 +137,5 @@ export {
   updatePostById,
   filterPost,
   getPostByAuthorId,
+  getPostsByDate,
 };
