@@ -11,6 +11,7 @@ const getPostById = async (id) => {
 };
 
 const updatePostById = async (id, updateData) => {
+  updateData.modify_date = Date.now();
   const post = await postModel.findByIdAndUpdate(id, updateData, { new: true });
   return post;
 };
