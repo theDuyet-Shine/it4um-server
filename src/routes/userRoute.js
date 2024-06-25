@@ -10,7 +10,7 @@ import { userAuthMiddleware } from "../middlewares/authMiddleware.js";
 const userRouter = express.Router();
 
 userRouter.get("/:id", getUserByIdController);
-userRouter.get("/:email", findUserByEmailController);
+userRouter.get("/", findUserByEmailController);
 userRouter.put("/:id", userAuthMiddleware, updateUserByIdController);
 userRouter.put(
   "/change-password/:id",
