@@ -27,11 +27,7 @@ postRouter.delete("/:id", combinedMiddleware, deletePostController);
 
 postRouter.get("/", filterPostController);
 
-postRouter.get(
-  "/user-post/:authorId",
-  userAuthMiddleware,
-  getPostsByAuthorIdController
-);
+postRouter.get("/user-post/:authorId", getPostsByAuthorIdController);
 
 postRouter.get("/statistic/:date/:page", getPostsByDateController);
 
