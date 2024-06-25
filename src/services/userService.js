@@ -1,4 +1,8 @@
-import { findUserById, updateUserById } from "../repositories/UserRepo.js";
+import {
+  findUserByEmail,
+  findUserById,
+  updateUserById,
+} from "../repositories/UserRepo.js";
 import { hashPassword } from "../utils/passwordUtil.js";
 
 const getUserByIdService = async (id) => {
@@ -40,4 +44,17 @@ const changePasswordService = async (userId, newPassword) => {
   }
 };
 
-export { getUserByIdService, changePasswordService, updateUserByIdService };
+const findUserByEmailService = async (email) => {
+  try {
+    const user = await findUserByEmail(email);
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+export {
+  getUserByIdService,
+  changePasswordService,
+  updateUserByIdService,
+  findUserByEmailService,
+};

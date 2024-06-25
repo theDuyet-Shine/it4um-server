@@ -31,6 +31,15 @@ const findUserByUsername = async (username) => {
   }
 };
 
+const findUserByEmail = async (email) => {
+  try {
+    const user = await userModel.findOne({ email });
+    return user;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const updateUserById = async (id, updateData) => {
   try {
     return await userModel.findByIdAndUpdate(id, updateData, { new: true });
@@ -67,4 +76,5 @@ export {
   deleteUserById,
   findUserByUsername,
   checkDuplicate,
+  findUserByEmail,
 };

@@ -1,5 +1,6 @@
 import {
   changePasswordService,
+  findUserByEmailService,
   getUserByIdService,
   updateUserByIdService,
 } from "../services/userService.js";
@@ -46,8 +47,21 @@ const changePasswordController = async (req, res) => {
   }
 };
 
+const findUserByEmailController = async (req, res) => {
+  try {
+    const { email } = req.params;
+    if (!email) return res.status(400).json({ messgae: "Thiếu email" });
+    const user = await findUserByEmailService(email);
+    if (user)
+      res.status(200).json({ message: "Email có tồn tại trong hệ thống" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 export {
   getUserByIdController,
   updateUserByIdController,
   changePasswordController,
+  findUserByEmailController,
 };
