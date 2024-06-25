@@ -1,0 +1,13 @@
+"filename", "language", "JavaScript", "comment", "blank", "total"
+"d:\20200118_DATN_2023.2\it4um-server\src\controllers\adminController.js", "JavaScript", 12, 3, 4, 19
+"d:\20200118_DATN_2023.2\it4um-server\src\controllers\postController.js", "JavaScript", 12, 0, 2, 14
+"d:\20200118_DATN_2023.2\it4um-server\src\index.js", "JavaScript", 2, 0, 0, 2
+"d:\20200118_DATN_2023.2\it4um-server\src\models\EmailBanList.js", "JavaScript", 3, 0, 0, 3
+"d:\20200118_DATN_2023.2\it4um-server\src\repositories\PostRepo.js", "JavaScript", 30, 3, 5, 38
+"d:\20200118_DATN_2023.2\it4um-server\src\repositories\UserRepo.js", "JavaScript", 7, 0, 0, 7
+"d:\20200118_DATN_2023.2\it4um-server\src\routes\adminRoute.js", "JavaScript", 10, 0, 4, 14
+"d:\20200118_DATN_2023.2\it4um-server\src\routes\postRoute.js", "JavaScript", 2, 0, 1, 3
+"d:\20200118_DATN_2023.2\it4um-server\src\services\adminService.js", "JavaScript", 29, 5, 6, 40
+"d:\20200118_DATN_2023.2\it4um-server\src\services\authService.js", "JavaScript", 7, 2, 1, 10
+"d:\20200118_DATN_2023.2\it4um-server\src\services\postService.js", "JavaScript", 10, 0, 1, 11
+"Total", "-", 124, 13, 24, 161

@@ -8,6 +8,6 @@ import { userAuthMiddleware } from "../middlewares/authMiddleware.js";
 const commentRouter = express.Router();
 
 commentRouter.post("/", userAuthMiddleware, createCommentController);
-commentRouter.get("/", userAuthMiddleware, getCommentsController);
+commentRouter.get("/", getCommentsController);
 
 export default commentRouter;
