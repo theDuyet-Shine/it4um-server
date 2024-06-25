@@ -68,10 +68,11 @@ const findUserByEmailController = async (req, res) => {
     const { email } = req.query;
     if (!email) return res.status(400).json({ messgae: "Thiếu email" });
     const user = await findUserByEmailService(email);
-    if (user)
+    if (user) {
       res
         .status(200)
         .json({ user: user, message: "Email có tồn tại trong hệ thống" });
+    } else res.status(404).json({ message: "Email không tồn tại" });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
