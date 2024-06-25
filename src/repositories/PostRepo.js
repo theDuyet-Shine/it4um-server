@@ -10,6 +10,15 @@ const getPostById = async (id) => {
   return post;
 };
 
+const updatePostView = async (id) => {
+  const post = await postModel.findByIdAndUpdate(
+    id,
+    { $inc: { total_views: 1 } },
+    { new: true }
+  );
+  return post;
+};
+
 const updatePostById = async (id, updateData) => {
   updateData.modify_date = Date.now();
   const post = await postModel.findByIdAndUpdate(id, updateData, { new: true });
@@ -138,4 +147,5 @@ export {
   filterPost,
   getPostByAuthorId,
   getPostsByDate,
+  updatePostView,
 };

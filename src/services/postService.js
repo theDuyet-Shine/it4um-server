@@ -9,6 +9,7 @@ import {
   getPostById,
   getPostsByDate,
   updatePostById,
+  updatePostView,
 } from "../repositories/PostRepo.js";
 import { updateUserById } from "../repositories/UserRepo.js";
 
@@ -26,8 +27,7 @@ const createPostService = async (postData) => {
 };
 
 const getPostByIdService = async (id) => {
-  const post = await getPostById(id);
-  await updatePostById(post._id, { $inc: { total_views: 1 } });
+  const post = await updatePostView(id);
   return post;
 };
 
