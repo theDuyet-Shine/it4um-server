@@ -15,7 +15,7 @@ const adminDeletePost = async (postId, violation_score) => {
     }
 
     // Kiểm tra điều kiện để xử lý vi phạm
-    if (post.author.violation_score + violation_score > 20) {
+    if (post.author.violation_score + violation_score >= 20) {
       // Xóa người dùng và các thông tin liên quan nếu vi phạm quá mức cho phép
       await deleteUserById(post.author._id);
       const bannedEmail = new emailBanListModel({
