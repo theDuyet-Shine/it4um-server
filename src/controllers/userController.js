@@ -47,6 +47,22 @@ const changePasswordController = async (req, res) => {
   }
 };
 
+const forgotPasswordController = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { password } = req.body;
+
+    if (!id) return res.status(400).json({ message: "Thiếu ID" });
+    if (!password) return res.status(400).json({ message: "Thiếu mật khẩu" });
+    const updatedUser = await changePasswordService(id, password);
+    res
+      .status(200)
+      .json({ message: "Đổi mật khẩu thành công", user: updatedUser });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 const findUserByEmailController = async (req, res) => {
   try {
     const { email } = req.query;
@@ -66,4 +82,5 @@ export {
   updateUserByIdController,
   changePasswordController,
   findUserByEmailController,
+  forgotPasswordController,
 };

@@ -2,6 +2,7 @@ import express from "express";
 import {
   changePasswordController,
   findUserByEmailController,
+  forgotPasswordController,
   getUserByIdController,
   updateUserByIdController,
 } from "../controllers/userController.js";
@@ -17,5 +18,7 @@ userRouter.put(
   userAuthMiddleware,
   changePasswordController
 );
+
+userRouter.put("/forgot-password/:id", forgotPasswordController);
 
 export default userRouter;
