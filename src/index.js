@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { handleConnectDB } from "./mongoConfig.js";
 import authRouter from "./routes/authRoute.js";
-import { userAuthMiddleware } from "./middlewares/authMiddleware.js";
 import userRouter from "./routes/userRoute.js";
 import postRouter from "./routes/postRoute.js";
 import tagRouter from "./routes/tagRoute.js";
@@ -26,7 +25,7 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/auth", authRouter);
-app.use("/user", userAuthMiddleware, userRouter);
+app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/tag", tagRouter);
 app.use("/comment", commentRouter);
