@@ -49,7 +49,7 @@ const changePasswordController = async (req, res) => {
 
 const findUserByEmailController = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email } = req.query;
     if (!email) return res.status(400).json({ messgae: "Thiếu email" });
     const user = await findUserByEmailService(email);
     if (user)
