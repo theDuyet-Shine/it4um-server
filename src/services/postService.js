@@ -27,7 +27,8 @@ const createPostService = async (postData) => {
 };
 
 const getPostByIdService = async (id) => {
-  const post = await updatePostView(id);
+  const post = await getPostById(id);
+  await updatePostView(id);
   return post;
 };
 
