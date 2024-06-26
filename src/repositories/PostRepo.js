@@ -37,7 +37,7 @@ const filterPost = async ({ sort, tag, search, page }) => {
   if (tag) {
     // Nếu tag là chuỗi, phân tách nó thành mảng
     const tagsArray = tag.split(",");
-    query.tags = { $all: tagsArray };
+    query.tags = { $in: tagsArray };
   }
   if (search) query.title = { $regex: search, $options: "i" };
 
@@ -73,7 +73,7 @@ const getPostByAuthorId = async (
 
     if (tag) {
       const tagsArray = tag.split(",");
-      query.tags = { $all: tagsArray };
+      query.tags = { $in: tagsArray };
     }
 
     if (search) {
