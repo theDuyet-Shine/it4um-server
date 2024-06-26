@@ -1,0 +1,10 @@
+"filename", "language", "JavaScript", "comment", "blank", "total"
+"d:\20200118_DATN_2023.2\it4um-server\src\controllers\userController.js", "JavaScript", 31, 0, 3, 34
+"d:\20200118_DATN_2023.2\it4um-server\src\index.js", "JavaScript", -1, 0, 0, -1
+"d:\20200118_DATN_2023.2\it4um-server\src\repositories\PostRepo.js", "JavaScript", 9, 0, 1, 10
+"d:\20200118_DATN_2023.2\it4um-server\src\repositories\UserRepo.js", "JavaScript", 9, 0, 1, 10
+"d:\20200118_DATN_2023.2\it4um-server\src\routes\postRoute.js", "JavaScript", -4, 0, 0, -4
+"d:\20200118_DATN_2023.2\it4um-server\src\routes\userRoute.js", "JavaScript", 9, 0, 1, 10
+"d:\20200118_DATN_2023.2\it4um-server\src\services\postService.js", "JavaScript", 1, 0, 0, 1
+"d:\20200118_DATN_2023.2\it4um-server\src\services\userService.js", "JavaScript", 17, 0, 0, 17
+"Total", "-", 71, 0, 6, 77
