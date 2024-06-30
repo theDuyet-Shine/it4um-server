@@ -4,7 +4,11 @@ import {
   getComments,
 } from "../repositories/CommentRepo.js";
 import { createNotification } from "../repositories/NotificationRepo.js";
-import { getPostById, updatePostById } from "../repositories/PostRepo.js";
+import {
+  getPostById,
+  updatePostById,
+  updatePostTotalComment,
+} from "../repositories/PostRepo.js";
 import { findUserById } from "../repositories/UserRepo.js";
 
 const createCommentService = async (commentData) => {
@@ -14,9 +18,7 @@ const createCommentService = async (commentData) => {
 
     if (post) {
       // Update total_comments count for the post
-      await updatePostById(commentData.post_id, {
-        $inc: { total_comments: 1 },
-      });
+      await updatePostTotalComment(commentData.post_id);
 
       // Create the new comment
       const newComment = await createComment(commentData);

@@ -19,6 +19,15 @@ const updatePostView = async (id) => {
   return post;
 };
 
+const updatePostTotalComment = async (id) => {
+  const post = await postModel.findByIdAndUpdate(
+    id,
+    { $inc: { total_comments: 1 } },
+    { new: true }
+  );
+  return post;
+};
+
 const updatePostById = async (id, updateData) => {
   updateData.modify_date = Date.now();
   const post = await postModel.findByIdAndUpdate(id, updateData, { new: true });
@@ -148,4 +157,5 @@ export {
   getPostByAuthorId,
   getPostsByDate,
   updatePostView,
+  updatePostTotalComment,
 };
