@@ -51,6 +51,7 @@ const updateUserById = async (id, updateData) => {
 const deleteUserById = async (id) => {
   try {
     await notificationModel.deleteMany({ user_id: id });
+    await notificationModel.deleteMany({ commenter_id: id });
     await postModel.deleteMany({ author: id });
     await commentModel.deleteMany({ commenter_id: id });
     const deletedUser = await userModel.findByIdAndDelete(id);
