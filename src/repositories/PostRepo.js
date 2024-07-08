@@ -48,7 +48,12 @@ const filterPost = async ({ sort, tag, search, page }) => {
     const tagsArray = tag.split(",");
     query.tags = { $in: tagsArray };
   }
-  if (search) query.title = { $regex: search, $options: "i" };
+  if (search) {
+    query.$or = [
+      { title: { $regex: search, $options: "i" } },
+      { content: { $regex: search, $options: "i" } },
+    ];
+  }
 
   let sortOrder = { modify_date: -1 };
   if (sort === "likes") sortOrder = { total_likes: -1 };
@@ -86,7 +91,10 @@ const getPostByAuthorId = async (
     }
 
     if (search) {
-      query.title = { $regex: search, $options: "i" };
+      query.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { content: { $regex: search, $options: "i" } },
+      ];
     }
 
     let sortOrder = { modify_date: -1 };
