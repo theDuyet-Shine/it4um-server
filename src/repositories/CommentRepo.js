@@ -49,7 +49,10 @@ const getComments = async (postId, page) => {
     return { ...comment.toObject(), replies: commentReplies };
   });
 
-  const totalComments = await commentModel.countDocuments({ post_id: postId });
+  const totalComments = await commentModel.countDocuments({
+    post_id: postId,
+    reply_to: null,
+  });
 
   return {
     comments: allComments,
