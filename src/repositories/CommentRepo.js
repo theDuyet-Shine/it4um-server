@@ -8,8 +8,7 @@ const createComment = async (commentData) => {
     // Populate the fields after creation
     const populatedComment = await commentModel
       .findById(newComment._id)
-      .populate("commenter_id", "fullname profile_image")
-      .populate("reply_to");
+      .populate("commenter_id", "fullname profile_image");
 
     return populatedComment;
   } catch (error) {
